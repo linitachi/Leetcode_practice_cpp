@@ -48,13 +48,10 @@ class Solution {
     int i = 0;
     vector<char>::iterator iter;
     while (s.size() > i) {
-      // 尋找字元，如果沒找到的話
       iter = find(buffer.begin(), buffer.end(), s[i]);
-      if (iter == buffer.end())
-        //   加入到vector裡面
-        buffer.push_back(s[i]);
-      else {
-        //   如果發現重複的元素 嘗試更新最大值
+      //  如果發現重複的元素
+      if (iter != buffer.end()) {
+        //   嘗試更新最大值
         if (longest < buffer.size()) {
           longest = buffer.size();
         }
@@ -64,8 +61,10 @@ class Solution {
           iter = find(buffer.begin(), buffer.end(), s[i]);
           if (iter == buffer.end()) break;
         }
-        buffer.push_back(s[i]);
       }
+      //  因為前面已經檢查過是否有重複了，因此buffer內一定沒有s[i]，
+      //   可以放心加入到buffer中。
+      buffer.push_back(s[i]);
       i++;
     }
     if (longest < buffer.size()) {
